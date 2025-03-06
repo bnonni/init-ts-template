@@ -427,14 +427,14 @@ class TsTemplate {
    * @returns {Promise<void>} A promise that resolves when the project has been initialized
    * @throws {Error} If the name and description are not provided
    */
-  static async skip(): Promise<void> {
+  static async skip(projectName: string): Promise<void> {
     try {
       // Log info message
       Logger.info('Skipping prompts, using defaults');
       // Get package.json content
       const packageJsonContent = this.getPackageJson();
       // Get project name
-      const name = packageJsonContent.name;
+      const name = projectName ?? packageJsonContent.name;
       // Generate file and folder structure
       await this.generateFileFolderStructure(packageJsonContent);
       // Get git config user
@@ -491,7 +491,7 @@ class TsTemplate {
       if(skip) {
         if(!name)
           throw new Error('Skipping prompts requires at least a project name');
-        return await this.skip();
+        return await this.skip(name);
       }
 
       // Log welcome message
