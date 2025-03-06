@@ -1,6 +1,6 @@
 {
     "name": "init-ts-template",
-    "version": "0.8.4",
+    "version": "0.8.5",
     "type": "module",
     "description": "TypeScript project template initializer. Like npm init, but for TS. Includes robust configuration for tsconfig.",
     "main": "./dist/cjs/index.js",
@@ -28,7 +28,8 @@
         "build:lint:test": "pnpm build && pnpm build:tests:node && pnpm lint:fix",
         "prepublish": "pnpm build",
         "version": "pnpm version",
-        "version:no-git": "pnpm version --no-commit-hooks --no-git-tag-version"
+        "version:no-git": "pnpm version --no-commit-hooks --no-git-tag-version",
+        "version:new": "git checkout -b $NEW_VERSION && git tag $NEW_VERSION && pnpm version:no-git $NEW_VERSION"
     },
     "license": "The Unlicense",
     "contributors": [
