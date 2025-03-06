@@ -25,7 +25,6 @@ export type GitUser = {
 };
 
 export type Contributor = {
-  [key: string | number | symbol]: any
   name: string;
   url: string;
   email?: string;
@@ -44,30 +43,83 @@ export type Repository = {
   url: string;
 }
 
-export type PackageJson = Record<string, any>;
+type Exports = {
+  '.' : {
+    types: string;
+    import: string;
+    require: string;
+  }
+}
+type Scripts = {
+  wipe               : string;
+  start              : string;
+  clean              : string;
+  build              : string;
+  'build:esm'        : string;
+  'build:cjs'        : string;
+  'build:tests:node' : string;
+  lint               : string;
+  'lint:fix'         : string;
+  'test:node'        : string;
+  'build:test'       : string;
+  'build:lint:test'  : string;
+  prepublish         : string;
+};
 
-export type ProjectDefaults = PackageInitOptions & {
+export type PackageJson = {
+  name: string;
+  version: string;
+  type: string;
+  description: string;
+  main: string;
+  module: string;
+  types: string;
+  exports : Exports;
+  license: string;
+  contributors: Contributor[];
+  homepage: string;
+  repository: Repository;
+  bugs: string;
+  publishConfig: { access: 'public' };
+  engines: { node: '>=22.0.0' };
+  keywords: string[];
+  scripts: Scripts;
+  dependencies: Record<string, string>;
+  devDependencies: Record<string, string>;
+  pnpm?: { onlyBuiltDependencies : string[] }
+};
+
+export type TsTemplateDefaults = {
+  name: string;
   module: string;
   main: string;
   types: string;
   packageManager: string;
   packageJsonFile: string;
   repository: Repository;
+  version: string;
+  description: string;
+  license: string;
+  type: string;
+  homepage: string;
+  bugs: string;
+  contributors: Contributor[]
+  keywords: string[];
+  src: boolean;
 };
 
 export type PackageInitOptions = {
     skip?: boolean;
     name?: string;
+    src?: boolean;
+    tsconfig?: string | TsConfig;
     version?: string;
     description?: string;
     license?: string;
-    src?: boolean;
     type?: string;
     homepage?: string;
-    bugs?: string;
-    contributors?: Contributor[]
+    contributors?: Contributor[];
     keywords?: string[];
-    tsconfig?: string | TsConfig;
 };
 
 export const DEFAULT_TS_CONFIG = {
