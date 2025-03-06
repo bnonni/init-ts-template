@@ -14,10 +14,10 @@ import {
   MOCHA_ARC_JSON,
   PackageInitOptions,
   PackageJson,
-  ProjectDefaults,
   TESTS_TSCONFIG_JSON,
   TsConfig,
   TSCONFIG_CJS_JSON,
+  TsTemplateDefaults,
 } from './types.js';
 
 /**
@@ -36,7 +36,7 @@ class TsTemplate {
    * @static
    * @type {ProjectDefaults} The default project details
    */
-  public static projectDefaults: ProjectDefaults = {
+  public static projectDefaults: TsTemplateDefaults = {
     name            : 'TBD',
     version         : '0.1.0',
     description     : 'TBD',
@@ -262,7 +262,6 @@ class TsTemplate {
    */
   static getPackageJson(): PackageJson {
     const {
-      name,
       version,
       type,
       description,
@@ -280,7 +279,7 @@ class TsTemplate {
     } = this.projectDefaults;
 
     return {
-      name,
+      name    : this.projectDefaults.name,
       version,
       type,
       description,
@@ -491,6 +490,7 @@ class TsTemplate {
       if(skip) {
         if(!name)
           throw new Error('Skipping prompts requires at least a project name');
+        this.projectDefaults.name = name;
         return await this.skip(name);
       }
 
